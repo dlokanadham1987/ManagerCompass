@@ -276,8 +276,20 @@ table.esc-table td{padding:12px 10px; border-bottom:1px solid var(--border); ver
 table.esc-table tr:last-child td{border-bottom:none;}
 .esc-topic{display:flex; align-items:center; gap:8px; font-weight:700; white-space:nowrap;}
 .esc-dot{width:8px; height:8px; border-radius:50%; background:var(--dc); flex:none;}
-.esc-contact{font-family:var(--font-mono); font-size:.8rem; color:var(--ink-soft); white-space:nowrap;}
+.esc-contact{display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.8rem; color:var(--ink-soft); white-space:nowrap;}
 .esc-wrap{background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:6px 12px; box-shadow:var(--shadow); overflow-x:auto;}
+
+.esc-actions{display:flex; align-items:center; gap:4px; position:relative;}
+.esc-icon-btn{
+  display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:5px;
+  background:transparent; border:1px solid transparent; color:var(--ink-faint); cursor:pointer; text-decoration:none;
+  transition:background .12s, color .12s, border-color .12s;
+}
+.esc-icon-btn:hover{background:var(--accent-tint); color:var(--accent-strong); border-color:var(--border);}
+.esc-copy-feedback{
+  position:absolute; top:-24px; right:0; background:var(--ink); color:#fff; font-size:.68rem; font-weight:600;
+  padding:3px 7px; border-radius:4px; white-space:nowrap; font-family:var(--font-body); pointer-events:none;
+}
 
 /* data explorer */
 .explorer-controls{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px; align-items:flex-start;}
