@@ -39,6 +39,7 @@ public class Snapshot
     public List<int> LevelCounts { get; set; } = new();
     public List<string> LevelLabels { get; set; } = new();
     public List<AttritionReason> AttritionByReason { get; set; } = new();
+    public List<AttritionReason> HeadcountByRegion { get; set; } = new();
     public List<RequisitionStatusRow> RequisitionStatus { get; set; } = new();
     public List<int> EngagementTrend { get; set; } = new();
 }

@@ -234,6 +234,13 @@ public class MockGuidanceDataService : IGuidanceDataService
             new AttritionReason { Label = "Performance / behavior / attend.", Percent = 14.1, Color = "#2E8C9C" },
             new AttritionReason { Label = "Personal / family", Percent = 8.3, Color = "#C1633C" },
         },
+        HeadcountByRegion = new()
+        {
+            new AttritionReason { Label = "USA", Percent = 38.0, Color = "#2C7A78" },
+            new AttritionReason { Label = "IND", Percent = 31.7, Color = "#2E8C9C" },
+            new AttritionReason { Label = "PHL", Percent = 29.7, Color = "#E4693F" },
+            new AttritionReason { Label = "ISR", Percent = 0.2, Color = "#7C5C99" },
+        },
         RequisitionStatus = new()
         {
             new RequisitionStatusRow { Status = "Approved", Count = 298, Color = "#2C7A78" },

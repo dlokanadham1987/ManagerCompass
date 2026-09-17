@@ -18,6 +18,7 @@ public class SampleHrDatasetReader
     public Snapshot Read(string folderPath)
     {
         var activeFte = CountColumn(Path.Combine(folderPath, "active_fte.xlsx"), "Shuffled FTEs", "Hier. Level");
+        var regions = CountColumn(Path.Combine(folderPath, "active_fte.xlsx"), "Shuffled FTEs", "Region");
         var requisitions = CountColumn(Path.Combine(folderPath, "requisitions.xlsx"), "Shuffled Requisitions", "Status");
         var exits = CountColumn(Path.Combine(folderPath, "exits.xlsx"), "Shuffled Exits", "Term Reason");
         var contractors = CountColumn(Path.Combine(folderPath, "contractors_interns_fact_consultants.xlsx"), "Shuffled Contractors", null);
@@ -39,6 +40,18 @@ public class SampleHrDatasetReader
             Percent = Math.Round(kv.Value * 100.0 / exitTotal, 1),
             Color = reasonColors[i % reasonColors.Length]
         }).ToList();
+
+        var regionColors = new[] { "#2C7A78", "#2E8C9C", "#E4693F", "#7C5C99" };
+        var headcountByRegion = regions.Counts
+            .Where(kv => kv.Key != "(blank)")
+            .OrderByDescending(kv => kv.Value)
+            .Take(4)
+            .Select((kv, i) => new AttritionReason
+            {
+                Label = kv.Key,
+                Percent = Math.Round(kv.Value * 100.0 / regions.TotalRows, 1),
+                Color = regionColors[i % regionColors.Length]
+            }).ToList();
 
         var statusColors = new Dictionary<string, string>
         {
@@ -74,6 +87,7 @@ public class SampleHrDatasetReader
             LevelCounts = levelCounts,
             EngagementTrend = new() { 75, 71, 69, 72 },
             AttritionByReason = attritionByReason,
+            HeadcountByRegion = headcountByRegion,
             RequisitionStatus = requisitionStatus
         };
     }
