@@ -268,7 +268,7 @@ public class MockGuidanceDataService : IGuidanceDataService
     // not invented data, so the app still runs for a teammate without local access to the dataset.
     private static Snapshot FallbackSnapshot() => new()
     {
-        ScopeLabel = "Sample HR Dataset — company-wide (cached copy, live read unavailable)",
+        ScopeLabel = "Sample HR Dataset — company-wide",
         SourceNote = "Live read of the sponsor's de-identified 10_Sample HR Dataset export was unavailable on this machine — showing the last-known real counts instead. Only single-column totals are ever shown; the dataset's row-level combinations were intentionally shuffled for privacy and are not valid to reconstruct.",
         Kpis = new()
         {
