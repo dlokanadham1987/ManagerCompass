@@ -12,6 +12,9 @@ export interface LeadershipCard {
   reviewedWith: string;
   period: string;
   cardNumber: string;
+  pulseLabel: string;
+  pulseColor: string;
+  pulseNote: string;
   stats: SnapshotKpi[];
   risksFlagged: LeadershipItem[];
   actionsTaken: LeadershipItem[];

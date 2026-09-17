@@ -6,13 +6,22 @@
 
   <article class="lcard">
     <div class="lc-head">
-      <div class="lc-avatar">{{ initials(c.teamName) }}</div>
-      <div>
-        <div class="eyebrow">Operating review card &middot; synthetic sample</div>
-        <h3>{{ c.teamName }}</h3>
-        <div class="meta2">Manager: {{ c.manager }} &middot; Reviewed with: {{ c.reviewedWith }} &middot; Period: {{ c.period }}</div>
+      <div class="lc-head-main">
+        <div class="lc-avatar" [style.--pc]="c.pulseColor">{{ initials(c.teamName) }}</div>
+        <div class="lc-head-titles">
+          <h3>{{ c.teamName }}</h3>
+          <div class="meta-chips">
+            <span class="meta-chip">Manager: {{ c.manager }}</span>
+            <span class="meta-chip">Reviewed with: {{ c.reviewedWith }}</span>
+            <span class="meta-chip">{{ c.period }}</span>
+          </div>
+        </div>
+        <div class="pulse-badge" [style.--pc]="c.pulseColor" [title]="c.pulseNote">
+          <span class="pulse-dot"></span>
+          <span class="pulse-label">{{ c.pulseLabel }}</span>
+        </div>
       </div>
-      <div class="card-no">{{ c.cardNumber }}</div>
+      <div class="pulse-note">{{ c.pulseNote }}</div>
     </div>
 
     <div class="lc-stats">

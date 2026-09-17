@@ -5,6 +5,16 @@ export interface TopicUsage {
   count: number;
 }
 
+export interface TopicAdoptionStat {
+  key: string;
+  label: string;
+  color: string;
+  count: number;
+  escalationRatePct: number | null;
+  checklistCompletionRatePct: number | null;
+  medianSeconds: number | null;
+}
+
 export interface AdoptionMetrics {
   activeManagers: number;
   eligibleManagers: number;
@@ -14,5 +24,6 @@ export interface AdoptionMetrics {
   medianSecondsPerQuestion: number;
   weeklyActiveTrend: number[];
   topTopics: TopicUsage[];
+  topicBreakdown: TopicAdoptionStat[];
   productionMeasurementPlan: string[];
 }

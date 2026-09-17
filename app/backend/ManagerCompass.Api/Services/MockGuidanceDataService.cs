@@ -242,27 +242,57 @@ public class MockGuidanceDataService : IGuidanceDataService
         }
     };
 
-    public LeadershipCard GetLeadershipCard() => new()
+    public LeadershipCard GetLeadershipCard()
+    {
+        var risks = new List<LeadershipItem>
         {
-            TeamName = "Illustrative example team (not from the sample dataset — individual-team slices aren't derivable from de-identified, column-shuffled data)",
-            Manager = "[Your name]",
+            new() { Text = "Engagement dipped 3 pts QoQ (72, prior 75) — workload named in 2 of 3 listening sessions.", Source = "HR Engagement Playbook · listening-session notes (synthetic)", Color = "#E4693F" },
+            new() { Text = "One tenured leasing consultant flagged as a retention risk after a schedule-change signal.", Source = "Stay Conversation Guide · manager notes (synthetic)", Color = "#1B6E6B" },
+            new() { Text = "Assistant Community Manager requisition has sat in intake for 12 days without posting.", Source = "Requisition system (synthetic)", Color = "#2C7A78" },
+        };
+
+        // The pulse badge is computed from this same period's data, not a fixed label — it moves
+        // if the risk count or engagement score changes next period.
+        const int engagementScore = 72;
+        string pulseLabel, pulseColor, pulseNote;
+        if (risks.Count >= 3 || engagementScore < 70)
+        {
+            pulseLabel = "Needs attention";
+            pulseColor = "#C97F1E";
+            pulseNote = $"{risks.Count} open risks this period, including a retention signal and a stalled requisition";
+        }
+        else if (risks.Count == 2 || engagementScore < 75)
+        {
+            pulseLabel = "Watch";
+            pulseColor = "#2E8C9C";
+            pulseNote = $"{risks.Count} items flagged this period — worth a check-in before next review";
+        }
+        else
+        {
+            pulseLabel = "On track";
+            pulseColor = "#2C7A78";
+            pulseNote = "No material risks flagged this period";
+        }
+
+        return new LeadershipCard
+        {
+            TeamName = "Riverbend Community Management Team",
+            Manager = "Lokanadham Dasamukha",
             ReviewedWith = "Regional Director",
             Period = "Q1 FY27",
             CardNumber = "MC-07 · Card No. 001",
+            PulseLabel = pulseLabel,
+            PulseColor = pulseColor,
+            PulseNote = pulseNote,
             Stats = new()
             {
                 new SnapshotKpi { Label = "Headcount", Value = "14", SubText = "Illustrative example team", Color = "#2C7A78" },
                 new SnapshotKpi { Label = "Open roles", Value = "2", SubText = "Illustrative example team", Color = "#2E8C9C" },
                 new SnapshotKpi { Label = "Attrition, 12mo", Value = "9%", SubText = "Illustrative example team", Color = "#6E8C52" },
-                new SnapshotKpi { Label = "Engagement", Value = "72", SubText = "Illustrative example team", Color = "#E4693F" },
+                new SnapshotKpi { Label = "Engagement", Value = engagementScore.ToString(), SubText = "Illustrative example team", Color = "#E4693F" },
                 new SnapshotKpi { Label = "Org layers to VP", Value = "3", SubText = "Illustrative example team", Color = "#7C5C99" },
             },
-            RisksFlagged = new()
-            {
-                new LeadershipItem { Text = "Engagement dipped 3 pts QoQ (72, prior 75) — workload named in 2 of 3 listening sessions.", Source = "HR Engagement Playbook · listening-session notes (synthetic)", Color = "#E4693F" },
-                new LeadershipItem { Text = "One tenured leasing consultant flagged as a retention risk after a schedule-change signal.", Source = "Stay Conversation Guide · manager notes (synthetic)", Color = "#1B6E6B" },
-                new LeadershipItem { Text = "Assistant Community Manager requisition has sat in intake for 12 days without posting.", Source = "Requisition system (synthetic)", Color = "#2C7A78" },
-            },
+            RisksFlagged = risks,
             ActionsTaken = new()
             {
                 new LeadershipItem { Text = "Ran 3 listening sessions and shared a \"you said / we did\" note with the team.", Color = "#6E8C52" },
@@ -278,6 +308,7 @@ public class MockGuidanceDataService : IGuidanceDataService
             EvidenceNote = "Evidence: Engagement Playbook, Stay Conversation Guide, Requisition Intake Guide, Measure What Matters (all synthetic placeholders)",
             HumanReviewNote = "Human review: HRBP for retention & comp items before any action is finalized"
         };
+    }
 
     public AdoptionMetrics GetAdoptionMetrics() => new()
     {
@@ -295,6 +326,22 @@ public class MockGuidanceDataService : IGuidanceDataService
             new TopicUsage { Key = "retention", Label = "Turnover & retention", Color = "#1B6E6B", Count = 8 },
             new TopicUsage { Key = "compensation", Label = "Compensation & merit", Color = "#7C5C99", Count = 6 },
             new TopicUsage { Key = "onboarding", Label = "New manager onboarding", Color = "#2E8C9C", Count = 5 },
+        },
+        // All 9 topics — counts sum to QuestionsAnsweredThisWeek (47), escalation counts sum to
+        // EscalationsRoutedThisWeek (6), and completion rates weighted-average to ChecklistCompletionRate
+        // (68%) across the topics that had any questions this week. Zero-question topics show null
+        // rates rather than a misleading 0%.
+        TopicBreakdown = new()
+        {
+            new TopicAdoptionStat { Key = "engagement", Label = "Engagement", Color = "#E4693F", Count = 14, EscalationRatePct = 7.1, ChecklistCompletionRatePct = 75, MedianSeconds = 32 },
+            new TopicAdoptionStat { Key = "recruiting", Label = "Recruiting & hiring", Color = "#2C7A78", Count = 11, EscalationRatePct = 9.1, ChecklistCompletionRatePct = 70, MedianSeconds = 45 },
+            new TopicAdoptionStat { Key = "retention", Label = "Turnover & retention", Color = "#1B6E6B", Count = 8, EscalationRatePct = 25, ChecklistCompletionRatePct = 60, MedianSeconds = 40 },
+            new TopicAdoptionStat { Key = "compensation", Label = "Compensation & merit", Color = "#7C5C99", Count = 6, EscalationRatePct = 33.3, ChecklistCompletionRatePct = 55, MedianSeconds = 55 },
+            new TopicAdoptionStat { Key = "onboarding", Label = "New manager onboarding", Color = "#2E8C9C", Count = 5, EscalationRatePct = 0, ChecklistCompletionRatePct = 80, MedianSeconds = 30 },
+            new TopicAdoptionStat { Key = "performance", Label = "Performance & career", Color = "#B85C72", Count = 2, EscalationRatePct = 0, ChecklistCompletionRatePct = 65, MedianSeconds = 42 },
+            new TopicAdoptionStat { Key = "policy", Label = "Policy", Color = "#8A9096", Count = 1, EscalationRatePct = 0, ChecklistCompletionRatePct = 60, MedianSeconds = 25 },
+            new TopicAdoptionStat { Key = "payroll", Label = "Payroll & benefits", Color = "#C1633C", Count = 0, EscalationRatePct = null, ChecklistCompletionRatePct = null, MedianSeconds = null },
+            new TopicAdoptionStat { Key = "teamhealth", Label = "Team health", Color = "#6E8C52", Count = 0, EscalationRatePct = null, ChecklistCompletionRatePct = null, MedianSeconds = null },
         },
         ProductionMeasurementPlan = new()
         {

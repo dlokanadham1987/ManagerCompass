@@ -15,6 +15,10 @@ public class LeadershipCard
     public string ReviewedWith { get; set; } = "";
     public string Period { get; set; } = "";
     public string CardNumber { get; set; } = "";
+    /// <summary>Computed from RisksFlagged and the Engagement stat below — not a fixed label.</summary>
+    public string PulseLabel { get; set; } = "";
+    public string PulseColor { get; set; } = "";
+    public string PulseNote { get; set; } = "";
     public List<SnapshotKpi> Stats { get; set; } = new();
     public List<LeadershipItem> RisksFlagged { get; set; } = new();
     public List<LeadershipItem> ActionsTaken { get; set; } = new();
