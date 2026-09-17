@@ -1,0 +1,16 @@
+<section class="view">
+  <div class="panel-head">When to hand off to a human</div>
+  <div class="esc-wrap">
+    <table class="esc-table">
+      <thead><tr><th>Topic</th><th>Escalate to HR when&hellip;</th><th>Contact</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let t of topics">
+          <td><span class="esc-topic" [style.color]="t.color"><app-topic-icon [kind]="t.key" [size]="15" [color]="t.color"></app-topic-icon>{{ t.label }}</span></td>
+          <td>{{ t.escalation }}</td>
+          <td class="esc-contact">{{ t.contact }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="wide-note">Every row above is a standing guardrail, not a suggestion &mdash; Manager Compass never makes the call itself on pay, performance, legal, or employment matters.</p>
+</section>

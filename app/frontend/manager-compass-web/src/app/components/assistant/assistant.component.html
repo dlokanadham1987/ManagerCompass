@@ -1,0 +1,96 @@
+<section class="view">
+  <div class="layout">
+    <nav class="side-nav" aria-label="Guidance topics">
+      <ng-container *ngFor="let group of topicGroups">
+        <div class="side-nav-group-header">{{ group.label }}</div>
+        <button
+          *ngFor="let t of group.topics"
+          type="button"
+          class="side-nav-link"
+          [class.active]="activeKey === t.key"
+          (click)="askTopic(t)">
+          <app-topic-icon [kind]="t.key" [size]="15" [color]="t.color"></app-topic-icon>
+          <span>{{ t.label }}</span>
+        </button>
+      </ng-container>
+    </nav>
+
+    <main class="convo">
+      <div class="panel-head">Try one of these</div>
+      <div class="prompts">
+        <button
+          *ngFor="let t of starterTopics"
+          type="button"
+          class="chip"
+          [style.--tc]="t.color"
+          (click)="askTopic(t)">
+          <app-topic-icon [kind]="t.key" [size]="13" [color]="t.color"></app-topic-icon>
+          {{ t.prompt }}
+        </button>
+      </div>
+
+      <div class="feed" role="log" aria-live="polite">
+        <div class="empty" *ngIf="!current">
+          <strong>Ask a question or pick a topic.</strong>
+          Try &ldquo;our engagement score dropped&rdquo;, &ldquo;how do I open a requisition&rdquo;, or &ldquo;what are my first 90 days&rdquo;. This assistant sticks to approved guidance and team-level signals &mdash; it will hand off anything that needs a human call.
+        </div>
+
+        <ng-container *ngIf="current as entry">
+          <div class="qline"><b>You asked</b> &mdash; {{ entry.question }}</div>
+
+          <div class="card thinking" *ngIf="entry.loading">
+            <span class="think-dot"></span><span class="think-dot"></span><span class="think-dot"></span>
+            <span class="think-label">Checking approved guidance&hellip;</span>
+          </div>
+
+          <ng-container *ngIf="!entry.loading && entry.response as r">
+            <div class="card guardrail" *ngIf="r.type === 'guardrail'">
+              <div class="card-flag"><app-topic-icon kind="policy" [size]="16" color="var(--critical)"></app-topic-icon><span>Guardrail</span></div>
+              <p class="answer">{{ r.message }}</p>
+            </div>
+
+            <div class="card clarify" *ngIf="r.type === 'clarify'">
+              <p class="answer">{{ r.message }}</p>
+            </div>
+
+            <div class="card" *ngIf="r.type === 'topic' && r.topic as t" [style.--tc]="t.color">
+              <div class="card-flag" [style.color]="t.color"><app-topic-icon [kind]="t.key" [size]="16" [color]="t.color"></app-topic-icon><span>{{ t.label }}</span></div>
+              <p class="answer">{{ t.answer }}</p>
+
+              <div class="section-label">Grounded in</div>
+              <div class="sources">
+                <span class="source" *ngFor="let s of t.sources" title="Real RealPage HR document — link to the current version on the RealPage Global Portal / SharePoint once confirmed">{{ s }}</span>
+              </div>
+
+              <div class="section-label checklist-label-row">
+                <span>Suggested next steps</span>
+                <span class="progress-count">{{ doneCount(entry) }} / {{ t.checklist.length }}</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" [style.width.%]="progressPct(entry)" [style.background]="t.color"></div></div>
+              <ul class="checklist">
+                <li *ngFor="let item of t.checklist; let i = index">
+                  <input type="checkbox" [id]="'chk-' + t.key + '-' + i" [(ngModel)]="entry.checked![i]" [ngModelOptions]="{standalone: true}" />
+                  <label [for]="'chk-' + t.key + '-' + i">{{ item }}</label>
+                </li>
+              </ul>
+
+              <div class="escalation">
+                <span class="mark">Escalation</span>
+                <span>{{ t.escalation }}</span>
+              </div>
+
+              <div class="meta">Guidance grounded in a real RealPage document — confirm with your HRBP that it's the current, approved version before acting.</div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <form class="composer" (ngSubmit)="onSubmit()">
+        <label for="q" style="position:absolute; left:-9999px;">Ask Manager Compass a question</label>
+        <input id="q" type="text" autocomplete="off" name="q" [(ngModel)]="inputText" placeholder="Ask about your team, a process, or a next step&hellip;" />
+        <button type="submit">Ask</button>
+      </form>
+      <p class="hint">Answers are served live from the .NET API. Sources shown are real RealPage documents — see the scope note above for what's confirmed vs. pending.</p>
+    </main>
+  </div>
+</section>
