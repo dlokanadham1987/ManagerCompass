@@ -62,12 +62,19 @@ table{border-collapse:collapse;}
 .rp-navbar{background:var(--surface); border-bottom:1px solid var(--border);}
 .rp-navbar-inner{max-width:1280px; margin:0 auto; padding:0 20px; display:flex; gap:2px; flex-wrap:wrap;}
 .rp-navbar a{
+  display:inline-flex; align-items:center; gap:6px;
   padding:13px 14px; font-size:.76rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
   color:var(--ink-soft); text-decoration:none; border-bottom:2px solid transparent; margin-bottom:-1px;
   transition:color .12s, border-color .12s;
 }
 .rp-navbar a:hover{color:var(--ink);}
 .rp-navbar a.active{color:var(--accent-strong); border-bottom-color:var(--accent);}
+.nav-badge-count{
+  display:inline-flex; align-items:center; justify-content:center; min-width:16px; height:16px; padding:0 5px;
+  border-radius:999px; background:var(--rp-coral); color:#fff; font-family:var(--font-mono);
+  font-size:.66rem; font-weight:700; letter-spacing:0; text-transform:none;
+}
+.nav-badge-dot{width:7px; height:7px; border-radius:50%; flex:none;}
 
 details.scope{margin-top:16px;}
 details.scope summary{cursor:pointer; font-size:.82rem; color:var(--ink-soft); list-style:none; display:flex; align-items:center; gap:6px; padding:2px 0;}

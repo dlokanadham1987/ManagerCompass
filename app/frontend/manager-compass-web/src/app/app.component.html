@@ -22,8 +22,14 @@
     <a routerLink="/assistant" routerLinkActive="active">Assistant</a>
     <a routerLink="/snapshot" routerLinkActive="active">People Snapshot</a>
     <a routerLink="/playbooks" routerLinkActive="active">Playbooks</a>
-    <a routerLink="/escalation" routerLinkActive="active">Escalation Directory</a>
-    <a routerLink="/leadership" routerLinkActive="active">Leadership Update</a>
+    <a routerLink="/escalation" routerLinkActive="active">
+      Escalation Directory
+      <span class="nav-badge-count" *ngIf="escalationsThisWeek" [title]="escalationsThisWeek + ' escalated to HR this week'">{{ escalationsThisWeek }}</span>
+    </a>
+    <a routerLink="/leadership" routerLinkActive="active">
+      Leadership Update
+      <span class="nav-badge-dot" *ngIf="leadershipPulseColor" [style.background]="leadershipPulseColor" [title]="leadershipPulseLabel"></span>
+    </a>
     <a routerLink="/adoption" routerLinkActive="active">Adoption &amp; Impact</a>
     <a routerLink="/explorer" routerLinkActive="active">Data Explorer</a>
   </div>
