@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Nyn6ybZttnA=",
+  "dgSpecHash": "DGK4dexuESM=",
   "success": true,
-  "projectFilePath": "C:\\Practice\\AI\\AIHachthon\\2026Sept\\app\\backend\\ManagerCompass.Api\\ManagerCompass.Api.csproj",
+  "projectFilePath": "C:\\Practice\\AI\\AIHachthon\\2026Sept\\ManagerCompass\\app\\backend\\ManagerCompass.Api\\ManagerCompass.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ldasamukha\\.nuget\\packages\\closedxml\\0.105.1\\closedxml.0.105.1.nupkg.sha512",
     "C:\\Users\\ldasamukha\\.nuget\\packages\\closedxml.parser\\2.0.0\\closedxml.parser.2.0.0.nupkg.sha512",

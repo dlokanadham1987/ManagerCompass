@@ -10,12 +10,17 @@ interface CurrentAnswer {
   question: string;
   response: AskResponse | null;
   loading: boolean;
-  checked?: boolean[];
 }
 
 interface TopicGroup {
   label: string;
   topics: Topic[];
+}
+
+interface PromptChip {
+  text: string;
+  color: string;
+  key: string;
 }
 
 const STARTER_KEYS = ['engagement', 'compensation', 'retention', 'recruiting', 'onboarding'];
@@ -44,9 +49,30 @@ export class AssistantComponent implements OnInit {
   starterTopics: Topic[] = [];
   current: CurrentAnswer | null = null;
   activeKey: string | null = null;
+  activeTopic: Topic | null = null;
   inputText = '';
 
   constructor(private api: ApiService) {}
+
+  get promptsHeading(): string {
+    return this.activeTopic ? `More on ${this.activeTopic.label}` : 'Try one of these';
+  }
+
+  get promptChips(): PromptChip[] {
+    if (this.activeTopic?.examplePrompts.length) {
+      return this.activeTopic.examplePrompts.map(text => ({
+        text,
+        color: this.activeTopic!.color,
+        key: this.activeTopic!.key
+      }));
+    }
+    return this.starterTopics.map(t => ({ text: t.prompt, color: t.color, key: t.key }));
+  }
+
+  askPromptChip(chip: PromptChip): void {
+    this.activeKey = chip.key;
+    this.submitAsk(chip.text, chip.key);
+  }
 
   ngOnInit(): void {
     this.api.getTopics().subscribe(topics => {
@@ -74,15 +100,6 @@ export class AssistantComponent implements OnInit {
     this.submitAsk(text);
   }
 
-  doneCount(entry: CurrentAnswer): number {
-    return entry.checked ? entry.checked.filter(Boolean).length : 0;
-  }
-
-  progressPct(entry: CurrentAnswer): number {
-    if (!entry.checked || !entry.checked.length) return 0;
-    return Math.round((this.doneCount(entry) / entry.checked.length) * 100);
-  }
-
   private submitAsk(text: string, topicKey?: string): void {
     // Replaces whatever is currently shown — selecting a new topic or asking a new
     // question always swaps the middle panel's content rather than stacking a history.
@@ -97,7 +114,9 @@ export class AssistantComponent implements OnInit {
         entry.response = response;
         entry.loading = false;
         if (response.type === 'topic' && response.topic) {
-          entry.checked = new Array(response.topic.checklist.length).fill(false);
+          this.activeTopic = response.topic;
+        } else {
+          this.activeTopic = null;
         }
       });
   }

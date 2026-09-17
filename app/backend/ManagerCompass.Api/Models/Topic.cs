@@ -14,4 +14,9 @@ public class Topic
     public List<string> Checklist { get; set; } = new();
     public string Escalation { get; set; } = "";
     public List<string> Keywords { get; set; } = new();
+
+    /// <summary>Alternate example phrasings for this same topic, shown as follow-up prompt chips
+    /// once a manager has opened it — distinct from <see cref="Prompt"/>, which is the one asked
+    /// by default when the topic is picked from the side nav.</summary>
+    public List<string> ExamplePrompts { get; set; } = new();
 }
