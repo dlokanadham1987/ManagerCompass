@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ManagerCompass.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82f9d4b0330216891bbedc8cf5fb0db1c390ba8b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e187713b5b67ae5af17c0de64ae070c8f9d80249")]
 [assembly: System.Reflection.AssemblyProductAttribute("ManagerCompass.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ManagerCompass.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
