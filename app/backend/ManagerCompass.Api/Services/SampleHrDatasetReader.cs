@@ -15,6 +15,21 @@ public class SampleHrDatasetReader
     private const int HeaderRow = 3; // row 1 = note, row 2 = blank, row 3 = column headers
     private const int FirstDataRow = 4;
 
+    /// <summary>
+    /// Resolves "SampleHrDataset:Path" from config. An absolute path (e.g. a teammate's own
+    /// OneDrive location) is used as-is; a relative path (e.g. "..\Resources\Sample HR Dataset",
+    /// the copy checked into the repo) is resolved against the process's working directory,
+    /// which is this project's folder when run via `dotnet run` from ManagerCompass.Api.
+    /// </summary>
+    public static string? ResolveConfiguredPath(IConfiguration configuration)
+    {
+        var configured = configuration["SampleHrDataset:Path"];
+        if (string.IsNullOrWhiteSpace(configured)) return null;
+        return Path.IsPathRooted(configured)
+            ? configured
+            : Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), configured));
+    }
+
     public Snapshot Read(string folderPath)
     {
         var activeFte = CountColumn(Path.Combine(folderPath, "active_fte.xlsx"), "Shuffled FTEs", "Hier. Level");

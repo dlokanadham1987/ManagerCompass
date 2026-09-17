@@ -31,8 +31,8 @@ public class DataExplorerService : IDataExplorerService
     public DataExplorerService(IConfiguration configuration, ILogger<DataExplorerService> logger)
     {
         _logger = logger;
-        var path = configuration["SampleHrDataset:Path"];
-        _folderPath = !string.IsNullOrWhiteSpace(path) && Directory.Exists(path) ? path : null;
+        var path = SampleHrDatasetReader.ResolveConfiguredPath(configuration);
+        _folderPath = path is not null && Directory.Exists(path) ? path : null;
         if (_folderPath is null)
             _logger.LogWarning("Data Explorer: sample HR dataset folder not found at {Path}", path);
     }

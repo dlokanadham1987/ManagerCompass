@@ -17,7 +17,7 @@ public class MockGuidanceDataService : IGuidanceDataService
     public MockGuidanceDataService(IConfiguration configuration, ILogger<MockGuidanceDataService> logger)
     {
         _logger = logger;
-        var datasetPath = configuration["SampleHrDataset:Path"];
+        var datasetPath = SampleHrDatasetReader.ResolveConfiguredPath(configuration);
         try
         {
             if (string.IsNullOrWhiteSpace(datasetPath) || !Directory.Exists(datasetPath))
