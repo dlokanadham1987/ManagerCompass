@@ -19,8 +19,11 @@ public class SampleHrDatasetReader
     {
         var activeFte = CountColumn(Path.Combine(folderPath, "active_fte.xlsx"), "Shuffled FTEs", "Hier. Level");
         var regions = CountColumn(Path.Combine(folderPath, "active_fte.xlsx"), "Shuffled FTEs", "Region");
+        var directReports = CountColumn(Path.Combine(folderPath, "active_fte.xlsx"), "Shuffled FTEs", "Direct Reports");
         var requisitions = CountColumn(Path.Combine(folderPath, "requisitions.xlsx"), "Shuffled Requisitions", "Status");
         var exits = CountColumn(Path.Combine(folderPath, "exits.xlsx"), "Shuffled Exits", "Term Reason");
+        var attritionType = CountColumn(Path.Combine(folderPath, "exits.xlsx"), "Shuffled Exits", "Attrition Type");
+        var tenureBands = CountColumn(Path.Combine(folderPath, "exits.xlsx"), "Shuffled Exits", "Tenure Bands");
         var contractors = CountColumn(Path.Combine(folderPath, "contractors_interns_fact_consultants.xlsx"), "Shuffled Contractors", null);
 
         var levelOrder = new[] { "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9" };
@@ -71,6 +74,32 @@ public class SampleHrDatasetReader
 
         var attritionRatePct = Math.Round(exitTotal * 100.0 / (activeFte.TotalRows + exitTotal), 1);
 
+        // Direct Reports is blank for individual contributors and a real number for managers —
+        // count of non-blank rows is the manager count, and the average of those numbers is a
+        // real, single-column-safe span-of-control figure (no cross-row join involved).
+        var managerCount = directReports.TotalRows - directReports.Counts.GetValueOrDefault("(blank)", 0);
+        var totalDirectReports = directReports.Counts
+            .Where(kv => kv.Key != "(blank)")
+            .Sum(kv => int.Parse(kv.Key) * kv.Value);
+        var avgSpanOfControl = managerCount > 0 ? Math.Round(totalDirectReports / (double)managerCount, 1) : 0;
+
+        var attritionTypeColors = new Dictionary<string, string> { ["Regrettable"] = "#C8402F", ["Non-Regrettable"] = "#2C7A78" };
+        var attritionByType = attritionType.Counts
+            .Where(kv => kv.Key != "(blank)")
+            .OrderByDescending(kv => kv.Value)
+            .Select(kv => new AttritionReason
+            {
+                Label = kv.Key,
+                Percent = Math.Round(kv.Value * 100.0 / exitTotal, 1),
+                Color = attritionTypeColors.GetValueOrDefault(kv.Key, "#8A9096")
+            }).ToList();
+
+        // "Within first year" = the four Tenure Bands buckets under 1 year, summed within this
+        // one column — still a single-column aggregate, just grouping labels of the same column.
+        var firstYearBuckets = new[] { "30 Days", "60 Days", "6 Months", "6 Mo to 1 Yr" };
+        var earlyTenureCount = tenureBands.Counts.Where(kv => firstYearBuckets.Contains(kv.Key)).Sum(kv => kv.Value);
+        var earlyTenureExitPct = Math.Round(earlyTenureCount * 100.0 / exitTotal, 1);
+
         return new Snapshot
         {
             ScopeLabel = "Sample HR Dataset — company-wide",
@@ -82,11 +111,14 @@ public class SampleHrDatasetReader
                 new SnapshotKpi { Label = "Exits, sample", Value = exitTotal.ToString("N0"), SubText = $"~{attritionRatePct}% of headcount+exits (estimate)", Color = "#6E8C52" },
                 new SnapshotKpi { Label = "Contingent workforce", Value = contractors.TotalRows.ToString("N0"), SubText = "Contractors, interns & FaCT consultants", Color = "#7C5C99" },
                 new SnapshotKpi { Label = "Engagement", Value = "—", SubText = "Illustrative only — no source column in sample dataset", Color = "#E4693F" },
+                new SnapshotKpi { Label = "Span of control", Value = avgSpanOfControl.ToString("0.0"), SubText = $"{managerCount:N0} managers · active_fte.xlsx", Color = "#1B6E6B" },
             },
             LevelLabels = levelOrder.ToList(),
             LevelCounts = levelCounts,
             EngagementTrend = new() { 75, 71, 69, 72 },
             AttritionByReason = attritionByReason,
+            AttritionByType = attritionByType,
+            EarlyTenureExitPct = earlyTenureExitPct,
             HeadcountByRegion = headcountByRegion,
             RequisitionStatus = requisitionStatus
         };

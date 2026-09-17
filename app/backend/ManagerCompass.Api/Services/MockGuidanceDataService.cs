@@ -31,6 +31,7 @@ public class MockGuidanceDataService : IGuidanceDataService
             _logger.LogWarning(ex, "Could not read live sample HR dataset from {Path} — falling back to last-known real numbers", datasetPath);
             _snapshot = FallbackSnapshot();
         }
+        _snapshot.LoadedAtUtc = DateTime.UtcNow;
     }
 
     private static readonly List<string> GuardrailPhrases = new()
@@ -277,6 +278,7 @@ public class MockGuidanceDataService : IGuidanceDataService
             new SnapshotKpi { Label = "Exits, sample", Value = "1,329", SubText = "~13.8% of headcount+exits (estimate)", Color = "#6E8C52" },
             new SnapshotKpi { Label = "Contingent workforce", Value = "761", SubText = "Contractors, interns & FaCT consultants", Color = "#7C5C99" },
             new SnapshotKpi { Label = "Engagement", Value = "—", SubText = "Illustrative only — no source column in sample dataset", Color = "#E4693F" },
+            new SnapshotKpi { Label = "Span of control", Value = "7.6", SubText = "1,164 managers · active_fte.xlsx", Color = "#1B6E6B" },
         },
         LevelLabels = new() { "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9" },
         LevelCounts = new() { 1, 12, 74, 346, 982, 2725, 2744, 1297, 125 },
@@ -288,6 +290,12 @@ public class MockGuidanceDataService : IGuidanceDataService
             new AttritionReason { Label = "Performance / behavior / attend.", Percent = 14.1, Color = "#2E8C9C" },
             new AttritionReason { Label = "Personal / family", Percent = 8.3, Color = "#C1633C" },
         },
+        AttritionByType = new()
+        {
+            new AttritionReason { Label = "Non-Regrettable", Percent = 52.4, Color = "#2C7A78" },
+            new AttritionReason { Label = "Regrettable", Percent = 40.3, Color = "#C8402F" },
+        },
+        EarlyTenureExitPct = 18.4,
         HeadcountByRegion = new()
         {
             new AttritionReason { Label = "USA", Percent = 38.0, Color = "#2C7A78" },

@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { ApiService } from '../../services/api.service';
 import { Topic, AskResponse } from '../../models/topic.model';
+import { Snapshot } from '../../models/snapshot.model';
 import { TopicIconComponent } from '../../shared/topic-icon.component';
+
+interface LiveStat {
+  value: string;
+  sub?: string;
+}
 
 interface CurrentAnswer {
   question: string;
@@ -41,7 +48,7 @@ const GROUP_MAP: Record<string, string> = {
 @Component({
   selector: 'app-assistant',
   standalone: true,
-  imports: [CommonModule, FormsModule, TopicIconComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TopicIconComponent],
   templateUrl: './assistant.component.html'
 })
 export class AssistantComponent implements OnInit {
@@ -51,6 +58,7 @@ export class AssistantComponent implements OnInit {
   activeKey: string | null = null;
   activeTopic: Topic | null = null;
   inputText = '';
+  private snapshot: Snapshot | null = null;
 
   constructor(private api: ApiService) {}
 
@@ -85,6 +93,39 @@ export class AssistantComponent implements OnInit {
         .map(key => topics.find(t => t.key === key))
         .filter((t): t is Topic => !!t);
     });
+
+    this.api.getSnapshot().subscribe(s => (this.snapshot = s));
+  }
+
+  // Only topics with a genuinely real, already-validated aggregate in the People Snapshot get a
+  // live stat here — e.g. Engagement has no source column in the sample dataset, so it's
+  // deliberately left out rather than showing a fabricated number.
+  liveStat(topicKey: string): LiveStat | null {
+    const s = this.snapshot;
+    if (!s) return null;
+
+    switch (topicKey) {
+      case 'recruiting':
+        return {
+          value: s.requisitionStatus.map(r => `${r.count} ${r.status.toLowerCase()}`).join(' · ')
+        };
+      case 'retention': {
+        const exits = s.kpis.find(k => k.label.startsWith('Exits'));
+        const topReason = s.attritionByReason[0];
+        if (!exits) return null;
+        return {
+          value: `${exits.value} exits sampled (${exits.subText})`,
+          sub: topReason ? `Top reason: ${topReason.label} — ${topReason.percent}%` : undefined
+        };
+      }
+      case 'teamhealth': {
+        const headcount = s.kpis.find(k => k.label === 'Active headcount');
+        if (!headcount) return null;
+        return { value: `${headcount.value} active headcount company-wide` };
+      }
+      default:
+        return null;
+    }
   }
 
   askTopic(topic: Topic): void {

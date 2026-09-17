@@ -1,6 +1,7 @@
 <section class="view" *ngIf="snapshot as s">
   <div class="kpi-head">
     <h2>People snapshot &mdash; {{ s.scopeLabel }}</h2>
+    <span class="sub">Data as of {{ loadedAtLabel(s.loadedAtUtc) }}</span>
   </div>
 
   <div class="kpi-grid">
@@ -32,6 +33,17 @@
         <div class="reason-track"><div class="reason-fill" [style.width.%]="r.percent * 3" [style.background]="r.color"></div></div>
         <span class="rval">{{ r.percent }}%</span>
       </div>
+
+      <div class="panel-subsection" *ngIf="s.attritionByType?.length">
+        <div class="section-label">Regrettable vs. non-regrettable</div>
+        <div class="reason-row" *ngFor="let r of s.attritionByType">
+          <span class="rlabel">{{ r.label }}</span>
+          <div class="reason-track"><div class="reason-fill" [style.width.%]="r.percent * 1.8" [style.background]="r.color"></div></div>
+          <span class="rval">{{ r.percent }}%</span>
+        </div>
+      </div>
+
+      <p class="wide-note" *ngIf="s.earlyTenureExitPct">{{ s.earlyTenureExitPct }}% of exits happened within an employee's first year.</p>
     </div>
 
     <div class="panel">

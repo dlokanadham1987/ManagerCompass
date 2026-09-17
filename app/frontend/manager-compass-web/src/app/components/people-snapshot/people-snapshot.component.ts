@@ -23,6 +23,13 @@ export class PeopleSnapshotComponent implements OnInit {
     return max ? Math.round((value / max) * 100) : 0;
   }
 
+  loadedAtLabel(loadedAtUtc: string): string {
+    return new Date(loadedAtUtc).toLocaleString(undefined, {
+      dateStyle: 'medium',
+      timeStyle: 'short'
+    });
+  }
+
   maxReqCount(rows: { count: number }[]): number {
     return Math.max(...rows.map(r => r.count), 1);
   }

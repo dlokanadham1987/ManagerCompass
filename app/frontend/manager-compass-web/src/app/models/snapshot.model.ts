@@ -20,10 +20,13 @@ export interface RequisitionStatusRow {
 export interface Snapshot {
   scopeLabel: string;
   sourceNote: string;
+  loadedAtUtc: string;
   kpis: SnapshotKpi[];
   levelCounts: number[];
   levelLabels: string[];
   attritionByReason: AttritionReason[];
+  attritionByType: AttritionReason[];
+  earlyTenureExitPct: number;
   headcountByRegion: AttritionReason[];
   requisitionStatus: RequisitionStatusRow[];
   engagementTrend: number[];

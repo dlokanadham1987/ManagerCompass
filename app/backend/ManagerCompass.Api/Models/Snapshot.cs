@@ -35,10 +35,13 @@ public class Snapshot
 {
     public string ScopeLabel { get; set; } = "";
     public string SourceNote { get; set; } = "";
+    public DateTime LoadedAtUtc { get; set; }
     public List<SnapshotKpi> Kpis { get; set; } = new();
     public List<int> LevelCounts { get; set; } = new();
     public List<string> LevelLabels { get; set; } = new();
     public List<AttritionReason> AttritionByReason { get; set; } = new();
+    public List<AttritionReason> AttritionByType { get; set; } = new();
+    public double EarlyTenureExitPct { get; set; }
     public List<AttritionReason> HeadcountByRegion { get; set; } = new();
     public List<RequisitionStatusRow> RequisitionStatus { get; set; } = new();
     public List<int> EngagementTrend { get; set; } = new();
