@@ -12,26 +12,8 @@
   --font-body:'Aptos','Segoe UI',-apple-system,BlinkMacSystemFont,Calibri,Roboto,Helvetica,Arial,sans-serif;
   --font-mono:'Consolas','Cascadia Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0F1825; --surface:#182233; --surface-2:#212D3F;
-    --ink:#E2E2DE; --ink-soft:#C3C8CE; --ink-faint:#8992A0; --border:#2E3A4C;
-    --accent:#6493CD; --accent-strong:#8FB0DC; --accent-light:#9DC0E8; --accent-tint:#1D3350;
-    --rp-coral:#F2875C; --rp-coral-tint:#3A2519;
-    --amber:#E0A552; --amber-tint:#3A2A15; --good:#5FBE86;
-    --critical:#E2887B; --critical-tint:#3B2420;
-    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 22px -12px rgba(0,0,0,.55);
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0F1825; --surface:#182233; --surface-2:#212D3F;
-  --ink:#E2E2DE; --ink-soft:#C3C8CE; --ink-faint:#8992A0; --border:#2E3A4C;
-  --accent:#6493CD; --accent-strong:#8FB0DC; --accent-light:#9DC0E8; --accent-tint:#1D3350;
-  --rp-coral:#F2875C; --rp-coral-tint:#3A2519;
-  --amber:#E0A552; --amber-tint:#3A2A15; --good:#5FBE86;
-  --critical:#E2887B; --critical-tint:#3B2420;
-  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 22px -12px rgba(0,0,0,.55);
-}
+/* Deliberately no dark-mode / prefers-color-scheme override: the app must render identically
+   (same background, same layout) on every machine regardless of OS or browser theme setting. */
 
 *{box-sizing:border-box;}
 html,body{height:100%;}
