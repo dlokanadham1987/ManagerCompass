@@ -1,27 +1,46 @@
 <section class="view">
   <div class="panel-head">All guidance topics &mdash; browse without asking</div>
-  <div class="playbook-grid">
-    <div class="card" *ngFor="let t of topics" [style.--tc]="t.color">
-      <div class="card-flag" [style.color]="t.color"><app-topic-icon [kind]="t.key" [size]="17" [color]="t.color"></app-topic-icon><span>{{ t.label }}</span></div>
-      <p class="answer">{{ t.answer }}</p>
+  <div class="layout">
+    <nav class="side-nav" aria-label="Guidance topics">
+      <ng-container *ngFor="let group of topicGroups">
+        <div class="side-nav-group-header">{{ group.label }}</div>
+        <button
+          *ngFor="let t of group.topics"
+          type="button"
+          class="side-nav-link"
+          [class.active]="selected?.key === t.key"
+          (click)="select(t)">
+          <app-topic-icon [kind]="t.key" [size]="15" [color]="t.color"></app-topic-icon>
+          <span>{{ t.label }}</span>
+        </button>
+      </ng-container>
+    </nav>
 
-      <div class="section-label">Grounded in</div>
-      <div class="sources">
-        <span class="source" *ngFor="let s of t.sources" title="Real RealPage HR document — link to the current version on the RealPage Global Portal / SharePoint once confirmed">{{ s }}</span>
+    <main class="playbook-main">
+      <div class="playbook-detail" *ngIf="selected as t" [style.--tc]="t.color">
+        <div class="card" [style.--tc]="t.color">
+          <div class="card-flag" [style.color]="t.color"><app-topic-icon [kind]="t.key" [size]="17" [color]="t.color"></app-topic-icon><span>{{ t.label }}</span></div>
+          <p class="answer">{{ t.answer }}</p>
+
+          <div class="section-label">Grounded in</div>
+          <div class="sources">
+            <span class="source" *ngFor="let s of t.sources" title="Real RealPage HR document — link to the current version on the RealPage Global Portal / SharePoint once confirmed">{{ s }}</span>
+          </div>
+
+          <div class="section-label">Suggested next steps</div>
+          <ul class="checklist">
+            <li *ngFor="let item of t.checklist; let i = index">
+              <input type="checkbox" [id]="'pb-' + t.key + '-' + i" />
+              <label [for]="'pb-' + t.key + '-' + i">{{ item }}</label>
+            </li>
+          </ul>
+
+          <div class="escalation">
+            <span class="mark">Escalation</span>
+            <span>{{ t.escalation }}</span>
+          </div>
+        </div>
       </div>
-
-      <div class="section-label">Suggested next steps</div>
-      <ul class="checklist">
-        <li *ngFor="let item of t.checklist; let i = index">
-          <input type="checkbox" [id]="'pb-' + t.key + '-' + i" />
-          <label [for]="'pb-' + t.key + '-' + i">{{ item }}</label>
-        </li>
-      </ul>
-
-      <div class="escalation">
-        <span class="mark">Escalation</span>
-        <span>{{ t.escalation }}</span>
-      </div>
-    </div>
+    </main>
   </div>
 </section>

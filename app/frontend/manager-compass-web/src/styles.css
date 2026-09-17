@@ -232,9 +232,8 @@ table.roles-table tr:last-child td{border-bottom:none;}
 .wide-note{font-size:.78rem; color:var(--ink-faint); margin-top:14px; border-top:1px solid var(--border); padding-top:10px;}
 
 /* playbooks */
-.playbook-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;}
-@media (max-width: 1080px){ .playbook-grid{grid-template-columns:repeat(2, 1fr);} }
-@media (max-width: 680px){ .playbook-grid{grid-template-columns:1fr;} }
+.playbook-main{display:flex; justify-content:center;}
+.playbook-detail{width:100%; max-width:640px;}
 
 /* escalation directory */
 table.esc-table{width:100%; border-collapse:collapse; font-size:.87rem;}
