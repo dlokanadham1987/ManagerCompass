@@ -10,6 +10,7 @@ export interface Topic {
   checklist: string[];
   escalation: string;
   keywords: string[];
+  examplePrompts: string[];
 }
 
 export interface AskResponse {

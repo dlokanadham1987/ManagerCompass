@@ -8,4 +8,15 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {}
+export class AppComponent {
+  managerName = 'Lokanadham Dasamukha';
+
+  get managerInitials(): string {
+    return this.managerName
+      .split(' ')
+      .filter(Boolean)
+      .map(w => w[0])
+      .join('')
+      .toUpperCase();
+  }
+}

@@ -62,7 +62,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "If you create the requisition yourself in RecruitIQ (Create > Requisition), tell HRSC so they can validate it and route it for approval"
             },
             Escalation = "Hand off to HR/Finance rather than acting alone for IT requisitions, which need HR, Finance, and IT leadership sign-off before HRSC will create them, and for Professional Services or Support and RPCC requisitions, where the forecast date must be confirmed with the relevant finance/operations lead before the requisition is created and routed.",
-            Keywords = new() { "requisition", "req", "hire", "hiring", "interview", "recruit", "job posting", "candidate", "headcount request" }
+            Keywords = new() { "requisition", "req", "hire", "hiring", "interview", "recruit", "job posting", "candidate", "headcount request" },
+            ExamplePrompts = new()
+            {
+                "What do I need to send HRSC to open a requisition?",
+                "Can I create the requisition myself in RecruitIQ?",
+                "What's different about an IT or Professional Services requisition?"
+            }
         },
         new Topic
         {
@@ -79,7 +85,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "Review each employee's 9-box placement (performance x potential) ahead of calibration"
             },
             Escalation = "These documents contain no guidance on merit budgets, increase percentages, or pay-decision rules — involve HR/Compensation for anything beyond documenting performance, potential, and ratings in UKG.",
-            Keywords = new() { "merit", "compensation", "comp", "raise", "increase", "pay planning", "calibration", "bonus" }
+            Keywords = new() { "merit", "compensation", "comp", "raise", "increase", "pay planning", "calibration", "bonus" },
+            ExamplePrompts = new()
+            {
+                "What should I document before calibration?",
+                "Where do I set an employee's Current Performance Level in UKG?",
+                "What does a 9-box placement need before merit season?"
+            }
         },
         new Topic
         {
@@ -96,7 +108,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "Work with the team to identify what they can influence, agree on next steps together, and close with a summary and a follow-up plan"
             },
             Escalation = "Reach out to your HRBP if you want a member of the HR team to co-facilitate the discussion, or for specific guidance on your team's situation.",
-            Keywords = new() { "engagement", "engagement score", "survey", "feedback", "listening session", "morale" }
+            Keywords = new() { "engagement", "engagement score", "survey", "feedback", "listening session", "morale" },
+            ExamplePrompts = new()
+            {
+                "How do I run a listening session after a low score?",
+                "How do I turn engagement feedback into a follow-up plan?",
+                "How do I prepare for a team discussion about morale?"
+            }
         },
         new Topic
         {
@@ -113,7 +131,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "Close with a clear recap, express appreciation for their openness, and schedule a genuine follow-up conversation"
             },
             Escalation = "Loop in your HRBP if you want support having the conversation itself (HR co-facilitation is available), or as soon as the employee actually initiates a resignation — offboarding requires you to coordinate with your HRBP on separation details before approving that request.",
-            Keywords = new() { "retention", "flight risk", "resign", "quit", "turnover", "stay conversation", "leaving" }
+            Keywords = new() { "retention", "flight risk", "resign", "quit", "turnover", "stay conversation", "leaving" },
+            ExamplePrompts = new()
+            {
+                "How do I start a stay conversation?",
+                "What do I do if an employee is about to resign?",
+                "How do I prepare before talking to a flight-risk employee?"
+            }
         },
         new Topic
         {
@@ -130,7 +154,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "Afterward, document the development goal using the SMART formula, summarize agreements, and schedule a follow-up touchpoint"
             },
             Escalation = "Involve your HR Business Partner when a situation falls outside standard goal management (e.g. an employee transferring departments with existing goals) or when you need broader support with the goal-setting or performance process.",
-            Keywords = new() { "performance", "career", "development", "goal", "promotion", "review", "feedback conversation" }
+            Keywords = new() { "performance", "career", "development", "goal", "promotion", "review", "feedback conversation" },
+            ExamplePrompts = new()
+            {
+                "How do I document a SMART development goal?",
+                "What feedback framework should I use for a coaching conversation?",
+                "How should I prepare for a career conversation?"
+            }
         },
         new Topic
         {
@@ -147,7 +177,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "If the handbook's general description doesn't clearly answer your situation, don't guess — the handbook itself says to direct specific questions to HR"
             },
             Escalation = "Involve your HRBP whenever the handbook's language is general, a policy's applicability to your situation is unclear, or you can't confirm you're looking at the current version.",
-            Keywords = new() { "policy", "handbook", "pto policy", "leave policy", "dress code", "remote work policy" }
+            Keywords = new() { "policy", "handbook", "pto policy", "leave policy", "dress code", "remote work policy" },
+            ExamplePrompts = new()
+            {
+                "How do I confirm I'm looking at the current handbook version?",
+                "Where do I check Flex First, Tuition Assistance, or Travel & Expense?",
+                "Where do I find the Internal Mobility Policy's latest revision?"
+            }
         },
         new Topic
         {
@@ -164,7 +200,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "General benefits questions: direct the employee to the relevant named administrator in the Benefits Summary, or point them to request the full RealPage Benefits Guide"
             },
             Escalation = "No single centralized \"Payroll/Benefits support\" team is named — escalate UKG direct-deposit access/configuration issues to the system administrator, and escalate any FMLA/STD/leave activation issue straight to Unum, since the manager has no role in processing either.",
-            Keywords = new() { "payroll", "benefits", "paycheck", "enrollment", "w2", "direct deposit", "insurance" }
+            Keywords = new() { "payroll", "benefits", "paycheck", "enrollment", "w2", "direct deposit", "insurance" },
+            ExamplePrompts = new()
+            {
+                "An employee can't update their direct deposit — what do I do?",
+                "An employee needs to start FMLA or short-term disability — who do I contact?",
+                "Where do I send a general benefits enrollment question?"
+            }
         },
         new Topic
         {
@@ -181,7 +223,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "Afterward, use the activity's own debrief questions as a real conversation with the team, not just a wrap-up exercise"
             },
             Escalation = "Reach out to your HRBP for questions or support in planning or facilitating these activities.",
-            Keywords = new() { "team health", "headcount", "attrition", "org chart", "span of control", "snapshot" }
+            Keywords = new() { "team health", "headcount", "attrition", "org chart", "span of control", "snapshot" },
+            ExamplePrompts = new()
+            {
+                "My team seems disconnected — what activity should I run?",
+                "How do I debrief after a team-building activity?",
+                "Should I run a virtual or in-person activity?"
+            }
         },
         new Topic
         {
@@ -198,7 +246,13 @@ public class MockGuidanceDataService : IGuidanceDataService
                 "60-90 Days: Review your 90-day quick-win plan and review goal progress, identifying areas of improvement"
             },
             Escalation = "Meet with HR or your direct leader on Day 1 for onboarding details, and reach out to your HRBP for any other HR policy or procedure not covered in the toolkit.",
-            Keywords = new() { "new manager", "onboarding", "first 90 days", "30 60 90", "just became a manager" }
+            Keywords = new() { "new manager", "onboarding", "first 90 days", "30 60 90", "just became a manager" },
+            ExamplePrompts = new()
+            {
+                "What should I do on Day 1 as a new manager?",
+                "What goals should be set in UKG by day 30?",
+                "What does my 90-day quick-win plan need to cover?"
+            }
         }
     };
 

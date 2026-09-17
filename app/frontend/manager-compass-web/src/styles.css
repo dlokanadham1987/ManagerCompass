@@ -41,12 +41,20 @@ table{border-collapse:collapse;}
 .rp-wordmark{font-family:var(--font-display); font-weight:700; font-size:1.15rem; letter-spacing:-.01em; color:#fff;}
 .rp-divider{width:1px; height:20px; background:rgba(255,255,255,.35);}
 .rp-app-name{font-weight:600; font-size:.86rem; letter-spacing:.1em; color:rgba(255,255,255,.92);}
-.rp-topbar-right{margin-left:auto; display:flex; align-items:center; gap:10px;}
+.rp-topbar-right{margin-left:auto; display:flex; align-items:center; gap:14px;}
 .badge{
   font-family:var(--font-mono); font-size:.68rem; letter-spacing:.04em;
   background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.4);
   padding:5px 10px; border-radius:4px; white-space:nowrap; font-weight:600;
 }
+.rp-user{display:flex; align-items:center; gap:8px;}
+.rp-user-avatar{
+  width:28px; height:28px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.5); color:#fff;
+  font-family:var(--font-display); font-weight:700; font-size:.7rem;
+}
+.rp-user-name{font-size:.82rem; font-weight:600; color:#fff; white-space:nowrap;}
+@media (max-width:700px){ .rp-user-name{display:none;} }
 
 .rp-navbar{background:var(--surface); border-bottom:1px solid var(--border);}
 .rp-navbar-inner{max-width:1280px; margin:0 auto; padding:0 20px; display:flex; gap:2px; flex-wrap:wrap;}
@@ -161,6 +169,10 @@ details.scope .scope-body strong{color:var(--ink);}
 .checklist label{cursor:pointer;}
 .checklist input:checked + label{color:var(--ink-faint); text-decoration:line-through;}
 
+.bullet-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+.bullet-list li{position:relative; padding-left:17px; font-size:.9rem; color:var(--ink);}
+.bullet-list li::before{content:""; position:absolute; left:1px; top:.5em; width:6px; height:6px; border-radius:50%; background:var(--tc, var(--accent));}
+
 .escalation{display:flex; gap:10px; background:var(--amber-tint); border:1px solid var(--amber); border-radius:6px; padding:11px 13px; margin-top:14px; font-size:.87rem; color:var(--ink);}
 .escalation .mark{font-family:var(--font-mono); color:var(--amber); font-weight:700; flex:none; letter-spacing:.03em;}
 
@@ -214,6 +226,34 @@ table.roles-table tr:last-child td{border-bottom:none;}
 .wide-note{font-size:.78rem; color:var(--ink-faint); margin-top:14px; border-top:1px solid var(--border); padding-top:10px;}
 
 /* playbooks */
+.pb-group-header{margin:22px 0 10px;}
+.pb-group-header:first-child{margin-top:0;}
+.playbook-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;}
+@media (max-width: 1080px){ .playbook-grid{grid-template-columns:repeat(2, 1fr);} }
+@media (max-width: 680px){ .playbook-grid{grid-template-columns:1fr;} }
+.playbook-card{
+  display:flex; flex-direction:column; align-items:flex-start; gap:6px; text-align:left; font-family:inherit;
+  background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--tc, var(--accent));
+  border-radius:8px; padding:16px 16px 14px; cursor:pointer; box-shadow:var(--shadow);
+  transition:transform .15s, box-shadow .15s;
+}
+.playbook-card:hover{transform:translateY(-2px); box-shadow:0 2px 4px rgba(20,20,20,.06), 0 10px 22px -12px rgba(20,20,20,.24);}
+.pc-icon{
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:color-mix(in srgb, var(--tc) 14%, var(--surface));
+}
+.pc-label{font-family:var(--font-display); font-weight:700; font-size:.95rem; color:var(--ink); margin-top:4px;}
+.pc-blurb{font-size:.8rem; color:var(--ink-soft);}
+.pc-progress{display:flex; align-items:center; gap:8px; width:100%; margin-top:8px;}
+.pc-progress-track{flex:1; height:5px; background:var(--surface-2); border-radius:3px; overflow:hidden;}
+.pc-progress-fill{height:100%; border-radius:3px;}
+.pc-progress span{font-family:var(--font-mono); font-size:.7rem; color:var(--ink-faint); white-space:nowrap; flex:none;}
+
+.pb-back{
+  background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:7px 14px;
+  font-size:.82rem; font-weight:600; color:var(--ink); cursor:pointer; margin-bottom:14px; transition:border-color .12s;
+}
+.pb-back:hover{border-color:var(--accent);}
 .playbook-main{display:flex; justify-content:center;}
 .playbook-detail{width:100%; max-width:640px;}
 
