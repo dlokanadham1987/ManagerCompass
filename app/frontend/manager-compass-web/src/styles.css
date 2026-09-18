@@ -418,3 +418,54 @@ table.esc-table tr:last-child td{border-bottom:none;}
 
 footer.strip{margin-top:30px; border-top:1px solid var(--border); padding-top:14px; font-size:.76rem; color:var(--ink-faint); display:flex; flex-wrap:wrap; gap:6px 18px;}
 footer.strip b{color:var(--ink-soft); font-weight:600;}
+
+/* 1:1s */
+.oto-kpi-row{margin-bottom:18px; margin-top:12px;}
+.oto-status-dot{width:8px; height:8px; border-radius:50%; flex:none;}
+.oto-schedule-row{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:6px;}
+.oto-field{display:flex; flex-direction:column; gap:4px; font-size:.76rem; color:var(--ink-faint); font-weight:600; text-transform:uppercase; letter-spacing:.04em;}
+.oto-field input, .oto-field select{
+  font-family:var(--font-body); font-size:.88rem; color:var(--ink); text-transform:none; letter-spacing:normal; font-weight:400;
+  background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:8px 10px;
+}
+.oto-schedule-btn{background:var(--rp-coral); color:#fff; border:none; border-radius:6px; padding:9px 16px; font-size:.85rem; font-weight:700; cursor:pointer; white-space:nowrap;}
+.oto-schedule-btn:disabled{opacity:.5; cursor:not-allowed;}
+.oto-hint{font-size:.74rem; color:var(--ink-faint); margin-top:7px;}
+.oto-notes{width:100%; min-height:80px; font-family:var(--font-body); font-size:.9rem; color:var(--ink); background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:10px; resize:vertical; box-sizing:border-box;}
+.oto-action-add{display:flex; gap:8px; margin:8px 0;}
+.oto-action-add input{flex:1; min-width:0; background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:7px 10px; font-size:.85rem; font-family:var(--font-body); color:var(--ink);}
+.oto-action-add button{background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:7px 12px; font-size:.78rem; font-weight:600; color:var(--ink); cursor:pointer; flex:none;}
+.oto-remove-btn{background:transparent; border:none; color:var(--ink-faint); font-size:1.1rem; line-height:1; cursor:pointer; padding:0 4px; flex:none;}
+.oto-remove-btn:hover{color:var(--critical);}
+.oto-save-btn{background:var(--accent); color:#fff; border:none; border-radius:6px; padding:9px 16px; font-size:.85rem; font-weight:700; cursor:pointer; margin-top:8px;}
+.oto-save-btn:disabled{opacity:.5; cursor:not-allowed;}
+
+.oto-meeting-card{margin-bottom:14px;}
+.oto-meeting-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+.oto-postnotes-btn{background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:7px 14px; font-size:.8rem; font-weight:600; color:var(--ink); cursor:pointer; transition:border-color .12s; flex:none;}
+.oto-postnotes-btn:hover{border-color:var(--accent);}
+.oto-postnotes-form{margin-top:10px; padding-top:12px; border-top:1px solid var(--border);}
+.oto-ai-btn{
+  background:var(--accent-tint); border:1px solid var(--accent); border-radius:6px; padding:8px 14px; margin-top:10px;
+  font-size:.82rem; font-weight:600; color:var(--accent-strong); cursor:pointer; transition:filter .12s;
+}
+.oto-ai-btn:hover{filter:brightness(0.96);}
+.oto-ai-btn:disabled{opacity:.7; cursor:default;}
+.oto-ai-summary{margin-top:10px; background:var(--surface-2); border:1px dashed var(--border); border-radius:6px; padding:10px 12px; font-size:.85rem; color:var(--ink-soft);}
+.oto-postnote-entry{padding:8px 0; border-bottom:1px solid var(--border);}
+.oto-postnote-entry:last-of-type{border-bottom:none;}
+.oto-postnote-entry p{margin:3px 0 0;}
+.oto-ai-label{display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--ink-faint); margin-bottom:4px;}
+
+.oto-modal-backdrop{
+  position:fixed; inset:0; background:rgba(15,24,37,.55); display:flex; align-items:center; justify-content:center;
+  z-index:100; padding:20px;
+}
+.oto-modal{
+  background:var(--surface); border-radius:10px; padding:22px 24px; width:100%; max-width:420px;
+  box-shadow:0 20px 50px -12px rgba(0,0,0,.4); display:flex; flex-direction:column;
+}
+.oto-modal select{
+  font-family:var(--font-body); font-size:.88rem; color:var(--ink); background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:8px 10px;
+}
